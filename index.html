@@ -40,7 +40,8 @@
 </head>
 <body>
 <h1>Animal Motion</h1>
-<a href="/store" target="_blank">Pictures</a>
+<a href="/preview" target="_blank">Preview Pictures</a>
+<a href="/store" target="_blank">Store</a>
 
 <div id='videoContainer'>
   <video autoplay='true' id='videoElement'>
@@ -66,7 +67,7 @@
 
   takeImageButton.addEventListener('click', createTakePictureHandler(canvases, handleComparedImages));
 
-  // setInterval(createTakePictureHandler(canvases, handleComparedImages), 2000);
+  setInterval(createTakePictureHandler(canvases, handleComparedImages), 1000);
 </script>
 </body>
 </html>

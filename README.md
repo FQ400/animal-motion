@@ -7,6 +7,8 @@ Goal of this project is to figure out what animal eats the snacks in the bird ho
 - use NVM
 - start the server: `npm run dev`
 - open the browser: http://127.0.0.1:8080/index.html
+- open the browser: http://127.0.0.1:8080/preview
+
 
 ## Problem
 

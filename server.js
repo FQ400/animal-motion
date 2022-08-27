@@ -23,4 +23,15 @@ app.post('/store-image', bodyParser.json(), function (req, res) {
   return res.send('Ok');
 
 });
+
+app.get('/preview', function(req, res){
+  fs.readdir(`${__dirname}/store`, (err, files) => {
+    const filteredFiles = files.filter((file) => file.includes('image'));
+    const reversedFiles = filteredFiles.reverse();
+    const last10Files = reversedFiles.slice(0,25);
+    const getHtmlImage = (file) => `<img alt="${file}" src="./store/${file}" width="640" height="320"/>`
+
+    return res.send(`<html><body>${last10Files.map(getHtmlImage).join('')}</body></html>`);
+  });
+});
 app.listen(port)
