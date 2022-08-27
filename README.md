@@ -19,5 +19,5 @@ TODOs:
 [x] How to get an image from the webcam?
 [x] How to detect motion?
   -> [x] Compare two images
-[] Send image to the server
-[] list all images
+[x] Send image to the server
+[x] list all images
