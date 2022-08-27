@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Animal Motion</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link rel='stylesheet' href=''>
+  <style>
+    #videoContainer {
+      margin: 0 auto;
+      width: 640px;
+      height: 480px;
+      border: 10px #333 solid;
+    }
+
+    #videoElement {
+      width: 640px;
+      height: 480px;
+      background-color: #666;
+    }
+
+    #takeImageButton {
+      display: block;
+      margin: 10px auto;
+    }
+
+    #canvasImageContainer {
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .diffImage {
+      border: 5px solid transparent;
+    }
+
+    .highlight {
+      border: 5px solid green;
+    }
+
+  </style>
+</head>
+<body>
+<h1>Animal Motion</h1>
+
+<div id='videoContainer'>
+  <video autoplay='true' id='videoElement'>
+  </video>
+</div>
+<button id='takeImageButton'>Take Picture</button>
+
+<div id="canvasImageContainer">
+  <canvas class='canvasElement' width='320' height='240'></canvas>
+  <canvas class='canvasElement' width='320' height='240'></canvas>
+  <img src='' id='diffImage' class='diffImage' width='320' height='240'>
+</div>
+
+<script src='./node_modules/resemblejs/resemble.js'></script>
+<script src='./lib.js'></script>
+<script>
+  const video = document.querySelector('#videoElement');
+
+  showWebcamStream(video);
+
+  const takeImageButton = document.querySelector('#takeImageButton');
+  const canvases = document.querySelectorAll('.canvasElement');
+
+  takeImageButton.addEventListener('click', createTakePictureHandler(canvases, handleComparedImages));
+
+  // setInterval(createTakePictureHandler(canvases, handleComparedImages), 1000);
+</script>
+</body>
+</html>
