@@ -10,11 +10,32 @@ const showWebcamStream = (videoElement) => {
   }
 }
 
+const getVideoElement = () => {
+  return document.querySelector('#videoElement');
+}
+
+const createCanvas = ({ width, height }) => {
+  const canvas = document.createElement('canvas');
+
+  canvas.width = width;
+  canvas.height = height;
+
+  return canvas;
+}
+
 const takePicture = (videoElement, canvasElement) => {
   // This is a side effect
-  canvasElement.getContext('2d').drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+  let canvas;
+  if(canvasElement) {
+    canvas = canvasElement;
+  } else {
+    canvas = createCanvas({width: 640, height: 480});
+  }
 
-  return canvasElement.toDataURL('image/jpeg')
+  canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+
+  return canvas.toDataURL('image/jpeg')
 }
 
 const createTakePictureHandler = (canvasElements, onSecondPicture) => {
@@ -25,7 +46,7 @@ const createTakePictureHandler = (canvasElements, onSecondPicture) => {
     const idx = counter % 2;
     const canvas = canvasElements[idx];
 
-    images[idx] = takePicture(video, canvas);
+    images[idx] = takePicture(getVideoElement(), canvas);
     counter++;
 
     if (images.every(i => i)) {
@@ -52,10 +73,24 @@ const handleComparedImages = (images) => {
 
     if(data.rawMisMatchPercentage > 10) {
       image.classList.add('highlight');
+      sendImageToServer(takePicture(getVideoElement()))
     } else {
       image.classList.remove('highlight');
     }
-    console.log(data);
+  });
+}
+
+const sendImageToServer = (data) => {
+  return fetch('/store-image', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then((resp) => {
+    console.log(resp)
+  }).catch((err) => {
+    console.log('Error in fetch:', err);
   });
 }
 
